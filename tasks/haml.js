@@ -134,13 +134,17 @@ module.exports = function(grunt) {
     var haml = require('haml');
 
     // First pass; generate the javascript method.
-    var output = haml(options.input);
+    
 
     if (options.target === 'html') {
       // Evaluate method with the context and return it.
-      cb(output(options.context));
+      cb(haml.render(options.input, options));
       return;
-    } else if (options.target !== 'js') {
+    } 
+    
+    var output = haml(options.input);
+    
+    if (options.target !== 'js') {
       grunt.fail.warn(
         'Target ' + options.target + ' is not a valid ' +
         'destination target for `haml-js`; choices ' +
